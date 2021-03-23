@@ -45,3 +45,7 @@ body {
   left: -7%;
   transform: rotate(180deg)
 }
+
+.tam{
+    width: inherit;
+}

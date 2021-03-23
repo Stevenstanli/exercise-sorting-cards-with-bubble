@@ -61,27 +61,4 @@ window.onload = function() {
       } 
     }
   });
-
-  sortBtn.addEventListener("click", function() {
-    bubbleSort(cardsNumbers);
-  });
-//----------------------------------------------------------------------------------------------------
-    function bubbleSort(arr) {
-    
-        for (let wall = arr.length - 1; wall > 0; wall--){
-            for (let i = 0; i <= wall; i++) {
-                if (arr[i] > arr[i + 1]) {
-                    
-                    let aux = arr[i + 1];
-                    arr[i + 1] = arr[i];
-                    arr[i] = aux;
-                    
-                    let aux2 = cardLocation.children[i + 1].innerHTML;
-                    cardLocation.children[i + 1].innerHTML = cardLocation.children[i].innerHTML;
-                    cardLocation.children[i].innerHTML = aux2;
-                }
-            }
-        }  
-    }
-    //----------------------------------------------------------------------------------------------------------
 };
