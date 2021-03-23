@@ -1,30 +1,86 @@
-let cartas = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
-let suits = ["&#9830", "&#9829", "&#9824", "&#9827"];
+window.onload = function() {
 
+  let suits = ['&spades;', '&clubs;', '&hearts;', '&diams;'];
+  let value = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+  let cardsNumbers = [];
 
+  let drawBtn = document.querySelector("#draw");
+  let sortBtn = document.querySelector("#sort");
+  let cardLocation = document.querySelector("#cards");
 
-document.getElementById("ingresar"), addEventListener("click", function () {
-    document.getElementById("zona").innerHTML = "";
-    let numero = document.getElementById("generar").value;
-    for (let i = 0; i < numero; i++) {
-        let Randomcartas = Math.floor(Math.random() * 13);
-        let Randomsuits = Math.floor(Math.random() * 4);
-        let simbolo = suits[Randomsuits];
-        let simbolo1 = cartas[Randomcartas];
-        document.getElementById("zona").innerHTML += '<div class="carta" id="idcarta"><span class="suitesuperior" id="suits">' + simbolo + '</span><h2 class="numero" id="simbolo">' + simbolo1 + '</h2><span class="suiteinferior" id="suits1">' + simbolo + '</span></div>';
+  drawBtn.addEventListener("click", function() {
 
-        /*document.getElementById("suits").innerHTML = simbolo;
-        document.getElementById("simbolo").innerHTML = simbolo1;
-        document.getElementById("suits1").innerHTML = simbolo;*/
-        if (simbolo === "&#9830" || simbolo === "&#9829") {
-            document.getElementById("suits").classList.add("redSuit");
-            document.getElementById("suits1").classList.add("redSuit");
-        } else if (simbolo === "&#9827" || simbolo === "&#9824") {
-            document.getElementById("suits").classList.remove("redSuit");
-            document.getElementById("suits1").classList.remove("redSuit");
-            console.log(simbolo + " " + simbolo1);
-        }
+    cardsNumbers = [];
+    let cardsLot = document.querySelector("#input").value;
+    cardLocation.innerHTML = " ";
 
+    for (let i = 0; i < cardsLot; i++) {
+      
+      let select = document.createElement("div");
+      select.innerHTML ="<div class='cardHeader'></div><div class='cardContent'></div><div class='cardFooter'></div>";
+      select.classList.add("card");
+      cardLocation.appendChild(select);
+
+      let randomSuits = Math.floor(Math.random() * suits.length );
+      let randomValue = Math.floor(Math.random() * value.length);
+      cardsNumbers.push(randomValue);
+
+      let suitHeader = document.getElementsByClassName("cardHeader");
+      let numberContent = document.getElementsByClassName("cardContent");
+      let suitFooter = document.getElementsByClassName("cardFooter");
+
+      if (randomSuits == 0) {
+        let cardHeader = suits[randomSuits];
+        let cardFooter = suits[randomSuits];
+        let num = value[randomValue];
+        
+        suitHeader[i].innerHTML = cardHeader;
+        numberContent[i].innerHTML = num;
+        suitFooter[i].innerHTML = cardFooter;
+        
+      } 
+      else if (randomSuits == 1) {
+        cardHeader = suits[randomSuits];
+        suitHeader[i].innerHTML = cardHeader;
+        num = value[randomValue];
+        numberContent[i].innerHTML = num;
+        cardFooter = suits[randomSuits];
+        suitFooter[i].innerHTML = cardFooter;
+      } 
+      else if (randomSuits == 2 || randomSuits == 3) {
+        cardHeader = suits[randomSuits];
+        suitHeader[i].innerHTML = cardHeader;
+        num = value[randomValue];
+        numberContent[i].innerHTML = num;
+        cardFooter = suits[randomSuits];
+        
+        suitFooter[i].innerHTML = cardFooter;
+        suitHeader[i].style.color = "red";
+        suitFooter[i].style.color = "red";
+        numberContent[i].style.color = "red";
+      } 
     }
+  });
 
-});
+  sortBtn.addEventListener("click", function() {
+    bubbleSort(cardsNumbers);
+  });
+
+    function bubbleSort(arr) {
+    
+        for (let wall = arr.length - 1; wall > 0; wall--){
+            for (let i = 0; i <= wall; i++) {
+                if (arr[i] > arr[i + 1]) {
+                    
+                    let aux = arr[i + 1];
+                    arr[i + 1] = arr[i];
+                    arr[i] = aux;
+                    
+                    let aux2 = cardLocation.children[i + 1].innerHTML;
+                    cardLocation.children[i + 1].innerHTML = cardLocation.children[i].innerHTML;
+                    cardLocation.children[i].innerHTML = aux2;
+                }
+            }
+        }  
+    }
+};
